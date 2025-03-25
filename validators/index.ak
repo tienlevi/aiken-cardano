@@ -1,8 +1,10 @@
 use aiken/collection/list
-use aiken/crypto.{VerificationKeyHash}
-use aiken/transaction/credential.{VerificationKey}
+use aiken/interval.{Interval,IntervalBound}
+use aiken/crypto.{VerificationKeyHash,VerificationKey}
 use aiken/interval.{Finite}
-use aiken/transaction.{Transaction,ScriptContext,Spend,ValidityRange}
+use cardano/transaction.{Transaction,Spend,ValidityRange}
+use cardano/script_context.{ScriptContext}
+use types/context.{Context}
 
 type Datum {
     time: Int,
@@ -21,20 +23,24 @@ fn start(range: ValidityRange, time){
     }
 }
 
-validator vesting {
-    vesting(datum: Datum, _redeemer: Void, context: ScriptContext) {
-    when context.purpose is {
-        Spend(_) -> or {
-            signed(context.transaction,datum.owner),
-            and {
-                signed(context.transaction,datum.beneficiary),
-                start(context.transaction.validity_range,datum.time),
-            }
-        }
-        _ -> False
+test main(){
+    let interval: Interval<Int> = Interval
+    { lower_bound:
+      IntervalBound { bound_type: Finite(1), is_inclusive: True }
+    , upper_bound:
+      IntervalBound { bound_type: Finite(10), is_inclusive: True }
     }
+    start(interval,1000)
 }
-}
+
+// validator vesting {
+//     vesting(datum: Datum, _redeemer: Void, context: Context<a>) {
+//     when context is {
+//         Spend(_) -> True
+//         _ -> False
+//     }
+// }
+// }
 
 
 

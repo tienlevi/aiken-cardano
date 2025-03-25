@@ -2,14 +2,15 @@
 # You typically do not need to edit this file
 
 [[requirements]]
-name = "aiken/vesting"
+name = "aiken-lang/stdlib"
 version = "v2"
 source = "github"
 
 [[packages]]
-name = "aiken/vesting"
+name = "aiken-lang/stdlib"
 version = "v2"
 requirements = []
 source = "github"
 
 [etags]
+"aiken-lang/stdlib@v2" = [{ secs_since_epoch = 1742892483, nanos_since_epoch = 79018699 }, "25c8d0802b8266feca04b47933382c5dee3cadb422208a5d3810d9d2df108c2e"]
